@@ -25,7 +25,7 @@ namespace Azure.AppServices {
     public IEnumerator Insert<T>(T item, Action<IRestResponse<T>> callback = null) where T : new() {
       string url = TableUrl(_name);
       ZumoRequest request = new ZumoRequest(url, Method.POST, true, _client.User);
-      Debug.Log("Insert Request: " + url);
+      //Debug.Log("Insert Request: " + url);
       request.AddBody(item);
       yield return request.Request.SendWebRequest();
       request.ParseJson<T>(callback);
@@ -34,7 +34,7 @@ namespace Azure.AppServices {
     public IEnumerator Read<T>(Action<IRestResponse<T[]>> callback = null) where T : new() {
       string url = TableUrl(_name);
       ZumoRequest request = new ZumoRequest(url, Method.GET, true, _client.User);
-      Debug.Log("Read Request: " + url);
+      //Debug.Log("Read Request: " + url);
       yield return request.Request.SendWebRequest();
       request.ParseJsonArray<T>(callback);
     }
@@ -42,7 +42,7 @@ namespace Azure.AppServices {
     public IEnumerator Query<T>(TableQuery query, Action<IRestResponse<T[]>> callback = null) where T : new() {
       string url = TableQueryUrl(_name, query.ToString());
       ZumoRequest request = new ZumoRequest(url, Method.GET, true, _client.User);
-      Debug.Log("Query Request: " + url + " Query:" + query);
+      //Debug.Log("Query Request: " + url + " Query:" + query);
       yield return request.Request.SendWebRequest();
       request.ParseJsonArray<T>(callback);
     }
@@ -51,7 +51,7 @@ namespace Azure.AppServices {
       string q = query.ToString();
       string nestedQueryString = string.Format("{0}{1}$inlinecount=allpages", q, (q.Length > 1) ? "&" : "?");
       string url = TableQueryUrl(_name, nestedQueryString);
-      Debug.Log("Query Request: " + url + " Paginated Query:" + query);
+      //Debug.Log("Query Request: " + url + " Paginated Query:" + query);
       ZumoRequest request = new ZumoRequest(url, Method.GET, true, _client.User);
       yield return request.Request.SendWebRequest();
       request.ParseJsonNestedArray<T, NestedResults<T>>("results", callback);
@@ -76,7 +76,7 @@ namespace Azure.AppServices {
       string url = TableUrl(_name, id);
       ZumoRequest request = new ZumoRequest(url, Method.PATCH, true, _client.User);
       request.AddBody(item);
-      Debug.Log("Update Request Url: " + url + " patch:" + item);
+      //Debug.Log("Update Request Url: " + url + " patch:" + item);
       yield return request.Request.SendWebRequest();
       request.ParseJson<T>(callback);
     }
@@ -84,7 +84,7 @@ namespace Azure.AppServices {
     public IEnumerator Delete<T>(string id, Action<IRestResponse<T>> callback = null) where T : new() {
       string url = TableUrl(_name, id);
       ZumoRequest request = new ZumoRequest(url, Method.DELETE, true, _client.User);
-      Debug.Log("Delete Request Url: " + url);
+      //Debug.Log("Delete Request Url: " + url);
       yield return request.Request.SendWebRequest();
       request.ParseJson<T>(callback);
     }
@@ -92,7 +92,7 @@ namespace Azure.AppServices {
     public IEnumerator Lookup<T>(string id, Action<IRestResponse<T>> callback = null) where T : new() {
       string url = TableUrl(_name, id);
       ZumoRequest request = new ZumoRequest(url, Method.GET, true, _client.User);
-      Debug.Log("Lookup Request Url: " + url);
+      //Debug.Log("Lookup Request Url: " + url);
       yield return request.Request.SendWebRequest();
       request.ParseJson<T>(callback);
     }
